@@ -50,7 +50,7 @@ class _MyListPageState extends State<MyListPage> {
                   ),
                 ),
                 secondaryBackground: Container(
-                  color: Colors.red,
+                  color: Colors.black,
                   child: Padding(
                     padding: const EdgeInsets.all(15),
                     child: Row(

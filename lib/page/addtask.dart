@@ -20,10 +20,12 @@ class AddTaskPage extends StatelessWidget {
             TextFormField(
               decoration:  InputDecoration(
                 hintText: "Masukkan Task Baru",
+                //mempengaruhi validasi,untuk mengecek karakter
                  errorText: context.watch<Tasklist>().taskName.error,
               ),
               controller: _controller,
               onChanged: (value) {
+                //mempengaruhi validasi,untuk mengecek validasi jumlah karakter
                 context.read<Tasklist>().onTaskNameChange(value);
               },
               
@@ -35,6 +37,7 @@ class AddTaskPage extends StatelessWidget {
               children: [
                 Expanded(
                   child: ElevatedButton(
+                    //untuk memastikan apakah karakter sudah sesuai,jika sudah sesuai akan menampilkan button submit
                     onPressed: context.watch<Tasklist>().isActive
                         ? () {
                             context
