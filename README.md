@@ -11,6 +11,7 @@ Challenge untuk hacktoberfest :
 
 
 5. Tambahkan fitur swipe left delete task
+
 ![IMG-20221102-WA0002](https://user-images.githubusercontent.com/99778770/199452517-0c50e564-e0a6-4298-b385-c1e214366a8a.jpg)
 
 
