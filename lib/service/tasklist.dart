@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:provider_listview/models/task.dart';
+import '../models/task.dart';
+import 'database_service.dart';
 import 'package:provider_listview/validation/validation_item.dart';
 
 class Tasklist with ChangeNotifier {
-  final List<Task> _taskList = [];
+
+  final DatabaseService _databaseService = DatabaseService();
+
+  List<Task> _taskList = [];
+  //String _taskName = "";
+
   bool _isActive = true;
 
-  ValidationItem _taskName = ValidationItem(null, null);
+  
 
   get taskList => _taskList;
   get taskName => _taskName;
   get isActive => _isActive;
+
+  ValidationItem _taskName = ValidationItem(null, null);
 
   // validation
   void setTaskName(String? taskName) {
@@ -35,7 +43,6 @@ class Tasklist with ChangeNotifier {
       _isActive = true;
     }
     clear();
-
     notifyListeners();
   }
 
@@ -49,13 +56,47 @@ class Tasklist with ChangeNotifier {
         : false;
   }
 
-  void addNewTask(String taskName) {
-    _taskList.add(
-      Task(
-        name: taskName,
-        status: 0,
-      ),
+  void addNewTask(String taskName) async {
+    await _databaseService.insertTask(
+      Task(name: taskName, status: 0),
     );
+    notifyListeners();
+   
+  }
+
+  void changeTaskName(String taskName) {
+    taskName = taskName;
+    notifyListeners();
+  }
+
+  Future<void> fetchTaskList() async {
+    _taskList = await _databaseService.taskList();
+    notifyListeners();
+  }
+
+  Future<void> addTask() async {
+    await _databaseService.insertTask(
+      Task(name: taskName, status: 0),
+    );
+    notifyListeners();
+  }
+
+  // Future<void> updateTask(String taskName) async {
+  //   print("Update Task ${taskName}");
+  //   await _databaseService.updateTask(taskName);
+  //   fetchTaskList();
+  //   notifyListeners();
+  // }
+   Future<void> editTask(Task task, String before ) async {
+    await _databaseService.editTask(task, before);
+    notifyListeners();
+   }
+
+
+  Future<void> deleteTask(Task task) async {
+    print("Delete Task ${task.name}");
+    await _databaseService.deleteTask(task.name);
+    fetchTaskList();
     notifyListeners();
   }
 }

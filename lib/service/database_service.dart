@@ -82,57 +82,43 @@ class DatabaseService {
     return List.generate(maps.length, (index) => Task.fromMap(maps[index]));
   }
 
-  // Future<Breed> breed(int id) async {
-  //   final db = await _databaseService.database;
-  //   final List<Map<String, dynamic>> maps =
-  //       await db.query('breeds', where: 'id = ?', whereArgs: [id]);
-  //   return Breed.fromMap(maps[0]);
-  // }
+//  Future<void> updateTask(String name) async {
+//   // Get a reference to the database.
+//   final db = await _databaseService.database;
 
-  // Future<List<Dog>> dogs() async {
-  //   final db = await _databaseService.database;
-  //   final List<Map<String, dynamic>> maps = await db.query('dogs');
-  //   return List.generate(maps.length, (index) => Dog.fromMap(maps[index]));
-  // }
+//   // Update the given Dog.
+//   await db.update(
+//     'task',
+//     task.toMap(),
+//     // Ensure that the Dog has a matching id.
+//     where: 'name = ?',
+//     // Pass the Dog's id as a whereArg to prevent SQL injection.
+//     whereArgs: [task.name],
+//   );
+// }
 
-  // // A method that updates a breed data from the breeds table.
-  // Future<void> updateBreed(Breed breed) async {
-  //   // Get a reference to the database.
-  //   final db = await _databaseService.database;
+  Future<void> editTask(Task task, String before) async {
+  try{
+    final db = await _databaseService.database;
+    int count = await db.update('task' , task.toMap(),
+      where: 'name = ?', whereArgs: [before]);
+    print('count : ${count}');
+  } catch (e) {
+  print(e.toString());
+  }
+  }
 
-  //   // Update the given breed
-  //   await db.update(
-  //     'breeds',
-  //     breed.toMap(),
-  //     // Ensure that the Breed has a matching id.
-  //     where: 'id = ?',
-  //     // Pass the Breed's id as a whereArg to prevent SQL injection.
-  //     whereArgs: [breed.id],
-  //   );
-  // }
+Future<void> deleteTask(String name) async {
+    final db = await _databaseService.database;
+    await db.delete(
+      'task',
+      // Use a `where` clause to delete a specific breed.
+      where: 'name = ?',
+      // Pass the Breed's id as a whereArg to prevent SQL injection.
+      whereArgs: [name],
+    );
+  }
+  
 
-  // Future<void> updateDog(Dog dog) async {
-  //   final db = await _databaseService.database;
-  //   await db.update('dogs', dog.toMap(), where: 'id = ?', whereArgs: [dog.id]);
-  // }
-
-  // // A method that deletes a breed data from the breeds table.
-  // Future<void> deleteBreed(int id) async {
-  //   // Get a reference to the database.
-  //   final db = await _databaseService.database;
-
-  //   // Remove the Breed from the database.
-  //   await db.delete(
-  //     'breeds',
-  //     // Use a `where` clause to delete a specific breed.
-  //     where: 'id = ?',
-  //     // Pass the Breed's id as a whereArg to prevent SQL injection.
-  //     whereArgs: [id],
-  //   );
-  // }
-
-  // Future<void> deleteDog(int id) async {
-  //   final db = await _databaseService.database;
-  //   await db.delete('dogs', where: 'id = ?', whereArgs: [id]);
-  // }
+  
 }

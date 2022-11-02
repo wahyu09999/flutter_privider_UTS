@@ -18,14 +18,15 @@ class AddTaskPage extends StatelessWidget {
         child: Column(
           children: [
             TextFormField(
-              decoration: InputDecoration(
+              decoration:  InputDecoration(
                 hintText: "Masukkan Task Baru",
-                errorText: context.watch<Tasklist>().taskName.error,
+                 errorText: context.watch<Tasklist>().taskName.error,
               ),
               controller: _controller,
               onChanged: (value) {
                 context.read<Tasklist>().onTaskNameChange(value);
               },
+              
             ),
             const SizedBox(
               height: 50,
@@ -39,7 +40,6 @@ class AddTaskPage extends StatelessWidget {
                             context
                                 .read<Tasklist>()
                                 .setTaskName(_controller.text);
-
                             if (context.read<Tasklist>().isValidated()) {
                               context.read<Tasklist>().addNewTask(
                                     _controller.text,
