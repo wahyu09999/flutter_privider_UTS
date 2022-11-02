@@ -19,7 +19,7 @@ Challenge untuk hacktoberfest :
 ![IMG-20221102-WA0009](https://user-images.githubusercontent.com/99778770/199452553-93daedc8-5cee-4d06-8f41-a3e41ff4756e.jpg)
 
 
-5. Tambahkan fitur edit task.
+5. Tambahkan fitur edit task. (   foto tertera dibawah   )
 ![IMG-20221102-WA0005](https://user-images.githubusercontent.com/99778770/199452645-ff595302-cbc9-49a1-b7b2-d1a6b7d19326.jpg)
 
 
