@@ -4,23 +4,12 @@ import 'package:provider/provider.dart';
 import '../models/task.dart';
 import '../service/tasklist.dart';
 
-class MyListPage extends StatefulWidget {
+class MyListPage extends StatelessWidget {
   const MyListPage({super.key});
 
   @override
-  State<MyListPage> createState() => _MyListPageState();
-}
-
-class _MyListPageState extends State<MyListPage> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    context.read<Tasklist>().fetchTaskList();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    List<Task> taskList = context.watch<Tasklist>().taskList;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Dynamic Listview dengan provider"),
@@ -31,19 +20,10 @@ class _MyListPageState extends State<MyListPage> {
           children: [
             Expanded(
               child: ListView.builder(
-                itemCount: context.watch<Tasklist>().taskList.length,
+                itemCount: taskList.length,
                 itemBuilder: (context, index) {
-                  var task = context.watch<Tasklist>().taskList[index];
-                  return Dismissible(
-                    key: UniqueKey(),
-                    onDismissed: (direction) {
-                      context.read<Tasklist>().deleteTask(task);
-                    },
-                    background: Container(color: Colors.red),
-                    child: ListTile(
-                      title:
-                          Text(context.watch<Tasklist>().taskList[index].name),
-                    ),
+                  return ListTile(
+                    title: Text(taskList[index].name),
                   );
                 },
               ),
@@ -52,12 +32,8 @@ class _MyListPageState extends State<MyListPage> {
               children: [
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: () async {
-                      // context.read<Tasklist>().addTask();
-                      await Navigator.pushNamed(context, "/addTask");
-                      // if (!context.mounted) return;
-                      if (!mounted) return;
-                      context.read<Tasklist>().fetchTaskList();
+                    onPressed: () {
+                      Navigator.pushNamed(context, "/addTask");
                     },
                     child: const Text("Halaman Tambah"),
                   ),
